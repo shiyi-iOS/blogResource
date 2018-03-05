@@ -3,20 +3,19 @@ title: 使用next主题配置博客基本信息
 date: 2018-03-02 09:36:14
 tags: [hexo, next]
 categories: [技术]
-copyright: true
-comments: true
 ---
 
-## 一、前言
 
 > 在上篇文章中提到了如何免费通过github和hexo创建一个自己的博客，在此将通过next为例，演示一遍配置的过程（喜欢其他主题的可以在此绕过了）
+
+##  一、前言
 
 #### 常用命令及文件地址：
 	
 	部署到本地预览查看三部曲：
-	hexo clean （主要是用来清理缓存之类的，最好每次都用一下，以防没有刷新成功）
-	hexo g 
-	hexo s (此时可本地预览查看)
+	hexo clean （清除缓存）
+	hexo g (生成静态网页)
+	hexo s (本地启动预览查看)
 
 	部署到git服务器上：
 	hexo deploy 
@@ -27,7 +26,9 @@ comments: true
 	~/blog/themes/next/_config.yml
 
 
-## 二、next主题的安装和基本配置
+后面不再重复解释
+
+##  二、next主题的安装和基本配置
 	
 	
 ### （一）安装
@@ -45,7 +46,7 @@ comments: true
 此时可以查看下主题是否配置成功，执行上面提到的三部曲（ **终端cd到blog文件夹 执行 hexo clean , hexo g , hexo s** ）
 然后访问[http://localhost:4000/](http://localhost:4000/),在本地查看效果，进行预览
 
-### (二) 基本信息的配置
+### （二） 基本信息的配置
 
 更多的博客和主题的配置可参考 [hexo官方文档](https://hexo.io/zh-cn/docs/index.html) 和 [next主题文档](http://theme-next.iissnan.com/)，如不想那么麻烦，可以继续往下看，下面就是我使用的一些常用的功能，足够自己使用了
 
@@ -324,15 +325,17 @@ about               | about: /about             | 关于页面                |
 	    #新浪: http://example.com/
 ```	    
 
-## 三、next主题的高级配置和一些炫酷的效果
+##  三、next主题的高级配置和一些炫酷的效果
 
 ### （一） 增加评论系统
 	
-百度了一下最新的消息，当前版本的next主题中已经内置支持了各种各样的评论系统，但由于政策的原因（需要实名评论），导致大多数的评论插件都已经失效了，而国外的一些要么加载比较慢，要么样子比较丑，故而最后我选择使用了gitment。[集成流程](https://jingyan.baidu.com/article/2f9b480de2b5b341cb6cc2be.html)
+百度了一下最新的消息，当前版本的next主题中已经内置支持了各种各样的评论系统，但由于政策的原因（需要实名评论），导致大多数的评论插件都已经失效了，而国外的一些加载比较慢。
 
-**gitment**（依托于github issue，能够自己管理，而且被墙的概率小），不过兼容性不太好（需要chrome内核才行）
+这里附上gitment的评论集成方式[集成流程](https://jingyan.baidu.com/article/2f9b480de2b5b341cb6cc2be.html)
 
-**Hypercomments** 是国外的一个第三方评论平台，有一个优点是可以匿名评论，但是我考虑到上网速度的问题就没有弄那个
+**gitment**（依托于github issue，能够自己管理，而且被墙的概率小），不过兼容性不太好（需要chrome内核才行），本人使用的gitment，有一个小问题，就是每次发布文章时需要登录下自己的github账号去初始化一下评论，评论功能才能使用，否则会提示“未开放评论”
+
+**Hypercomments** 是国外的一个第三方评论平台
 
 **多说** 在2017年06月01日就关闭评论服务了
 
@@ -340,5 +343,64 @@ about               | about: /about             | 关于页面                |
 
 **来必力** (韩国人弄的)总是乱码
 
-**DISQUS** 外国的，界面又丑，加载又慢 
+**DISQUS** 外国的，加载慢 
 
+---
+
+### （二） 隐藏网页底部powered By Hexo / 强力驱动
+
+
+打开主题配置文件，找到如下图位置，将powered设置为 false，theme下的enable 设置为 false
+
+![picture10](https://raw.githubusercontent.com/lishibo-iOS/pictures/master/picture1/10.png)
+
+---
+
+### （三） 设置首页文章列表不显示全文(只显示预览)
+
+* 进入hexo博客项目的themes/next目录
+* 打开_config.yml文件
+* 搜索"auto_excerpt",找到如下部分：
+
+
+		# Automatically Excerpt. Not recommand.
+		# Please use <!-- more --> in the post to control excerpt accurately.
+		auto_excerpt:
+		  enable: false
+		  length: 150
+
+	  
+* 把enable改为对应的false改为true，length设置下，然后hexo d -g，再进主页，问题就解决了！
+
+---
+
+### （四） 增加本地搜索功能
+
+#### 添加百度/谷歌/本地 自定义站点内容搜索
+
+1. 安装 hexo-generator-searchdb，在站点的根目录下执行以下命令：
+
+		npm install hexo-generator-searchdb --save
+	
+2. 编辑博客配置文件，新增以下内容到任意位置：
+
+		search:
+			  path: search.xml
+			  field: post
+			  format: html
+			  limit: 10000
+			  
+3. 编辑主题配置文件，启用本地搜索功能：
+
+		# Local search
+		local_search:
+		  enable: true
+
+
+---
+
+
+### （五）其他炫酷效果可参考 [hexo的next主题个性化教程:打造炫酷网站](https://www.jianshu.com/p/f054333ac9e6)
+
+
+---

@@ -3,8 +3,6 @@ title: 使用Hexo&GitHub免费快速搭建博客教程
 date: 2018-03-01 10:18:46
 tags: [github, hexo, next]
 categories: [技术]
-copyright: true
-comments: true
 ---
 
 > 经过两天的折腾，终于搞定了属于自己的第一个博客的搭建，在此期间踩了许多坑，现总结一下帮助各位能够更方便去搭建自己的博客。先贴上成果 [**拾忆的博客**](https://lishibo-ios.github.io/)
