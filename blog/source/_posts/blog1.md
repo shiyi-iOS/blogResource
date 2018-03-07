@@ -71,7 +71,7 @@ categories: [技术]
 	 
 	 查看版本号，如存在则表明配置成功
 	 
-2. mac系统自带Git环境，Windows用户需要自行下载[Git](https://github.com/waylau/git-for-win)
+2. mac系统：下载Xcode会自带Git环境，Windows用户需要自行下载[Git](https://github.com/waylau/git-for-win)
 
 3. 安装完成后，通过git命令查看自己的用户名和邮箱是否和自己github中的一致，如不一致请自行更改，如查询到多个用户名须删除没用的用户名，如查询后没有任何反应则表明还没有配置用户名，用下面的修改或者添加用户名命令即可，如提示其他之类的可先执行命令 `git config`，然后再执行以下命令即可成功,附查看和更改命令（其他命令可自行百度查找）：
 
