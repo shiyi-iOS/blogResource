@@ -1,5 +1,5 @@
 ---
-title: 使用next主题配置博客基本信息
+title: 博客搭建（二）-- 使用next主题配置博客基本信息
 date: 2018-03-02 09:36:14
 tags: [hexo, next]
 categories: [技术]

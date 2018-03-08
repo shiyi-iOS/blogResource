@@ -1,5 +1,5 @@
 ---
-title: 使用Hexo&GitHub免费快速搭建博客教程
+title: 博客搭建（一）-- 使用Hexo&GitHub免费快速搭建
 date: 2018-03-01 10:18:46
 tags: [github, hexo, next]
 categories: [技术]
