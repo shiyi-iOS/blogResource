@@ -399,8 +399,47 @@ about               | about: /about             | 关于页面                |
 
 ---
 
+### （五） 给 hexo next 主题加上背景图片
 
-### （五）其他炫酷效果可参考 [hexo的next主题个性化教程:打造炫酷网站](https://www.jianshu.com/p/f054333ac9e6)
+给 hexo next 加上背景图片，只需要在 themes\next\source\css_custom\custom.styl 文件中添加几行代码：
+
+```
+@media screen and (min-width:1200px) {
+
+    body {
+    background-image:url(/images/background.jpg);
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+    background-position:50% 50%; 
+    }
+
+    #footer a {
+        color:#eee;
+    }
+}
+```
+
+repeat、attachment、position就是调整图片的位置，不重复出现、不滚动等等。
+
+完成这一步其实背景就会自动更换了，但是会出现一个问题，因为next主题的背景是纯透明的，这样子就造成背景图片的影响看不见文字，这对于博客来说肯定不行。
+
+那么就需要调整背景的不透明度了。同样是修改themes\next\source\css\ _custom\custom.styl文件。在后面添加如下代码
+
+```
+.main-inner { 
+    margin-top: 60px;
+    padding: 60px 60px 60px 60px;
+    background: #fff;
+    opacity: 0.8;
+    min-height: 500px;
+}
+```
+
+background: #fff; 白色
+
+opacity: 0.8;不透明度
+
+### （六） 其他炫酷效果可参考 [hexo的next主题个性化教程:打造炫酷网站](https://www.jianshu.com/p/f054333ac9e6)
 
 
 ---
