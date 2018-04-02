@@ -19,10 +19,39 @@
     [super viewDidLoad];
 
     
-    [self test7];
+    [self test8];
     
     //开启新线程使用子类 NSInvocationOperation
 //    [NSThread detachNewThreadSelector:@selector(test1) toTarget:self withObject:nil];
+    
+}
+
+- (void)test8 {
+    
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    
+    NSBlockOperation *op1 = [NSBlockOperation blockOperationWithBlock:^{
+        
+        for (int i = 0; i < 2; i++) {
+            [NSThread sleepForTimeInterval:2]; // 模拟耗时操作
+            NSLog(@"1---%@", [NSThread currentThread]); // 打印当前线程
+        }
+        
+    }];
+    
+    NSBlockOperation *op2 = [NSBlockOperation blockOperationWithBlock:^{
+        
+        for (int i = 0; i < 2; i++) {
+            [NSThread sleepForTimeInterval:2]; // 模拟耗时操作
+            NSLog(@"2---%@", [NSThread currentThread]); // 打印当前线程
+        }
+        
+    }];
+    
+    [op2 addDependency:op1];//添加依赖
+    
+    [queue addOperation:op1];
+    [queue addOperation:op2];
     
 }
 

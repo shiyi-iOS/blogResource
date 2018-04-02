@@ -485,5 +485,76 @@ NSOperationQueue *queue = [[NSOperationQueue alloc] init];
 
 ## NSOperation 操作依赖
 
+通过操作依赖，我们可以很方便的控制操作之间的执行先后顺序，NSOperation 提供了3个接口供我们管理和查看依赖。
 
+- `- (void)addDependency:(NSOperation *)op;` 添加依赖，使当前操作依赖于操作 op 的完成。
+- `- (void)removeDependency:(NSOperation *)op;` 移除依赖，取消当前操作对操作 op 的依赖。
+- `@property (readonly, copy) NSArray<NSOperation *> *dependencies;` 在当前操作开始执行之前完成执行的所有操作对象数组。
+
+当然，我们经常用到的还是添加依赖操作。现在考虑这样的需求，比如说有 A、B 两个操作，其中 A 执行完操作，B 才能执行操作。
+
+如果使用依赖来处理的话，那么就需要让操作 B 依赖于操作 A。具体代码如下：
+
+``` objectivec
+
+- (void)test8 {
+    
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    
+    NSBlockOperation *op1 = [NSBlockOperation blockOperationWithBlock:^{
+        
+        for (int i = 0; i < 2; i++) {
+            [NSThread sleepForTimeInterval:2]; // 模拟耗时操作
+            NSLog(@"1---%@", [NSThread currentThread]); // 打印当前线程
+        }
+        
+    }];
+    
+    NSBlockOperation *op2 = [NSBlockOperation blockOperationWithBlock:^{
+        
+        for (int i = 0; i < 2; i++) {
+            [NSThread sleepForTimeInterval:2]; // 模拟耗时操作
+            NSLog(@"2---%@", [NSThread currentThread]); // 打印当前线程
+        }
+        
+    }];
+    
+    [op2 addDependency:op1];//添加依赖
+    
+    [queue addOperation:op1];
+    [queue addOperation:op2];
+    
+}
+
+```
+
+> 输出结果
+> 
+> 2018-04-02 16:20:26.529972+0800 NSOperation[9401:278609] 1---<NSThread: 0x60400027b500>{number = 3, name = (null)}
+> 
+> 2018-04-02 16:20:28.534974+0800 NSOperation[9401:278609] 1---<NSThread: 0x60400027b500>{number = 3, name = (null)}
+> 
+> 2018-04-02 16:20:30.538225+0800 NSOperation[9401:278607] 2---<NSThread: 0x604000276180>{number = 4, name = (null)}
+> 
+> 2018-04-02 16:20:32.542203+0800 NSOperation[9401:278607] 2---<NSThread: 0x604000276180>{number = 4, name = (null)}
+
+- 可以看到：通过添加操作依赖，无论运行几次，其结果都是 op1 先执行，op2 后执行。
+
+
+## NSOperation 优先级
+
+NSOperation 提供了queuePriority（优先级）属性，queuePriority属性适用于同一操作队列中的操作，不适用于不同操作队列中的操作。默认情况下，所有新创建的操作对象优先级都是NSOperationQueuePriorityNormal。但是我们可以通过setQueuePriority:方法来改变当前操作在同一队列中的执行优先级。
+
+``` objectivec
+
+// 优先级的取值
+typedef NS_ENUM(NSInteger, NSOperationQueuePriority) {
+    NSOperationQueuePriorityVeryLow = -8L,
+    NSOperationQueuePriorityLow = -4L,
+    NSOperationQueuePriorityNormal = 0,
+    NSOperationQueuePriorityHigh = 4,
+    NSOperationQueuePriorityVeryHigh = 8
+};
+
+```
 
