@@ -318,12 +318,14 @@ about               | about: /about             | 关于页面                |
 
 打开主题配置文件，进行如下配置：
 
-```
+
 	links_title: 友情链接
 	links:
 	    #百度: http://www.baidu.com/
 	    #新浪: http://example.com/
-```	    
+
+
+
 
 ##  三、next主题的高级配置和一些炫酷的效果
 
